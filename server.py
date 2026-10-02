@@ -159,7 +159,36 @@ def cancel_meeting(emp_id : str, meeting_dt : datetime, topic: str) -> str:
     )
     return meeting_manager.cancel_meeting(req)
 
+@mcp.tool()
+def get_employee_leave_balance(emp_id:str)->str:
+    """
+    Get employee leave balance.
+    :param emp_id: Employee ID
+    :return: Employee leave balance
 
+    """
+    return leave_manager.get_leave_balance(emp_id)
+
+@mcp.tool()
+def apply_leave(emp_id: str, leave_dates:List[date]) -> str:
+    """
+    Apply leave for an employee.
+    :param emp_id: Employee ID
+
+    :param leave_dates: List of dates
+    :return: Confirmation message
+    """
+    req = LeaveApplyRequest(emp_id=emp_id, leave_dates=leave_dates)
+    return leave_manager.apply_leave(req)
+
+@mcp.tool()
+def get_leave_history(emp_id:str) -> str:
+    """
+    Get leave history for an employee.
+    :param emp_id: Employee ID
+    :return: Confirmation message
+    """
+    return leave_manager.get_leave_history(emp_id)
 
 @mcp.prompt("onboard_new_employee")
 def onboard_new_employee(employee_name: str, manager_name: str):
