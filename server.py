@@ -15,7 +15,7 @@ leave_manager = LeaveManager()
 ticket_manager = TicketManager()
 meeting_manager = MeetingManager()
 
-seed_services(employee_manager, leave_manager, ticket_manager, meeting_manager)
+seed_services(employee_manager, leave_manager, meeting_manager, ticket_manager)
 
 mcp = FastMCP("HR-ASSIST-Agentic-AI-System")
 
