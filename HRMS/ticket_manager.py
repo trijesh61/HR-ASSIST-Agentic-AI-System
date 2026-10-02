@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 from datetime import datetime
-from hrms.schemas import TicketCreate, TicketStatusUpdate
+from .schemas import TicketCreate, TicketStatusUpdate
 
 
 class TicketManager:

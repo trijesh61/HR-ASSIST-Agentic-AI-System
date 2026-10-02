@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Dict
 
-from hrms.schemas import LeaveApplyRequest
+from .schemas import LeaveApplyRequest
 
 
 class LeaveManager:

@@ -1,6 +1,6 @@
 from typing import List, Dict, Optional
 from difflib import get_close_matches
-from hrms.schemas import EmployeeCreate
+from .schemas import EmployeeCreate
 
 
 class EmployeeManager:

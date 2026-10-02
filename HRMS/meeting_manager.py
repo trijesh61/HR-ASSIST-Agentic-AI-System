@@ -1,7 +1,7 @@
 from typing import List, Dict
 from collections import defaultdict
 from datetime import datetime
-from hrms.schemas import MeetingCreate, MeetingCancelRequest
+from .schemas import MeetingCreate, MeetingCancelRequest
 
 class MeetingManager:
     def __init__(self):
