@@ -63,18 +63,6 @@ def get_employee_details(name: str) -> Dict[str, str]:
     return emp_details
 
 @mcp.tool()
-def create_ticket(emp_id: str, item: str, reason:str) -> str:
-    """
-    Create a ticket for buying required items for an employee.
-    :param emp_id: Employee ID
-    :param item: Item requested (Laptop, ID Card, etc.)
-    :param reason: Reason for the request
-    :return: Confirmation message
-    """
-    ticket_req = TicketCreate(emp_id=emp_id, item=item, reason=reason)
-    return ticket_manager.create_ticket(ticket_req)
-
-@mcp.tool()
 def send_email(subject: str, body: str, to_emails: list[str]) -> str:
     """
     Send an email.
@@ -90,6 +78,20 @@ def send_email(subject: str, body: str, to_emails: list[str]) -> str:
         to_emails=to_emails,
         from_email= email_sender.username,)
     return f"Email successfully sent!"
+
+@mcp.tool()
+def create_ticket(emp_id: str, item: str, reason:str) -> str:
+    """
+    Create a ticket for buying required items for an employee.
+    :param emp_id: Employee ID
+    :param item: Item requested (Laptop, ID Card, etc.)
+    :param reason: Reason for the request
+    :return: Confirmation message
+    """
+    ticket_req = TicketCreate(emp_id=emp_id, item=item, reason=reason)
+    return ticket_manager.create_ticket(ticket_req)
+
+
 
 @mcp.tool()
 def update_ticket_status(ticket_id: str, status: str) -> str:
@@ -111,6 +113,51 @@ def list_tickets(employee_id: str, status: str) -> list[dict[str, str]]:
     :return: List of tickets
     """
     return ticket_manager.list_tickets(employee_id=employee_id, status=status)
+
+@mcp.tool()
+def schedule_meeting(emp_id:str, meeting_time: datetime, topic:str) -> str:
+    """
+    Schedule a meeting.
+    :param emp_id: Employee ID
+    :param meeting_time: Meeting time
+    :param topic: Meeting topic
+    :return: Confirmation message
+
+    """
+    meeting_req = MeetingCreate(
+        emp_id=emp_id,
+        topic=topic,
+        meeting_dt=meeting_time)
+    return meeting_manager.schedule_meeting(meeting_req)
+
+
+@mcp.tool()
+def get_meetings(emp_id: str) -> list[dict[str, str]]:
+    """
+    Get meetings for an employee.
+    :param emp_id: Employee ID
+    :return: List of meetings
+
+    """
+    return meeting_manager.get_meetings(emp_id)
+
+@mcp.tool()
+def cancel_meeting(emp_id : str, meeting_dt : datetime, topic: str) -> str:
+    """
+    Cancel a meeting.
+
+    :param emp_id: Employee ID
+    :param meeting_dt: Meeting time
+    :param topic: Meeting topic
+    :return: Confirmation message
+
+       """
+    req = MeetingCancelRequest(
+        emp_id=emp_id,
+        meeting_dt=meeting_dt,
+        topic=topic
+    )
+    return meeting_manager.cancel_meeting(req)
 
 
 
