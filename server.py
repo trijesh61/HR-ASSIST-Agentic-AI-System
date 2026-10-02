@@ -1,14 +1,22 @@
 from fastmcp import FastMCP
 from typing import  Dict, List
+import os
 
 from HRMS import *
-'''from HRMS.employee_manager import EmployeeManager
-from HRMS.leave_manager import LeaveManager
-from HRMS.meeting_manager import MeetingManager
-from HRMS.schemas import EmployeeCreate
-from HRMS.ticket_manager import TicketManager'''
-
+from emails import EmailSender
 from utils import seed_services
+
+from dotenv import load_dotenv
+_ = load_dotenv()
+
+email_sender = EmailSender(
+        smtp_server="smtp.gmail.com",
+        port=587,
+        username=os.getenv("CB_EMAIL"),
+        password=os.getenv("CB_EMAIL_PWD"),
+        use_tls=True
+    )
+
 
 employee_manager = EmployeeManager()
 leave_manager = LeaveManager()
@@ -54,6 +62,48 @@ def get_employee_details(name: str) -> Dict[str, str]:
     emp_details = employee_manager.get_employee_details(emp_id)
     return emp_details
 
+@mcp.tool()
+def create_ticket(emp_id: str, item: str, reason:str) -> str:
+    """
+    Create a ticket for buying required items for an employee.
+    :param emp_id: Employee ID
+    :param item: Item requested (Laptop, ID Card, etc.)
+    :param reason: Reason for the request
+    :return: Confirmation message
+    """
+    ticket_req = TicketCreate(emp_id=emp_id, item=item, reason=reason)
+    return ticket_manager.create_ticket(ticket_req)
+
+@mcp.tool()
+def send_email(subject: str, body: str, to_emails: list[str]) -> str:
+    """
+    Send an email.
+
+    :param subject: Subject of the email
+    :param body: Body of the email
+    :param to_emails: List of emails of employees
+
+        """
+    email_sender.send_email(
+        subject=subject,
+        body=body,
+        to_emails=to_emails,
+        from_email= email_sender.username,)
+    return f"Email successfully sent!"
+
+
+@mcp.prompt("onboard_new_employee")
+def onboard_new_employee(employee_name: str, manager_name: str):
+    return f"""Onboard a new employee with the following details:
+    - Name: {employee_name}
+    - Manager Name: {manager_name}
+    Steps to follow:
+    - Add the employee to the HRMS system.
+    - Send a welcome email to the employee with their login credentials. (Format: employee_name@atliq.com)
+    - Notify the manager about the new employee's onboarding.
+    - Raise tickets for a new laptop, id card, and other necessary equipment.
+    - Schedule an introductory meeting between the employee and the manager.
+    """
 
 
 
