@@ -39,18 +39,21 @@ def add_employee( emp_name: str, manager_id : str, email : str) -> str :
 
 
 @mcp.tool()
-def get_employee_details(name:str ) -> Dict[str, str]:
+def get_employee_details(name: str) -> Dict[str, str]:
     """
-    Get Employee Details from HRMS System.
-    :param name: Employee Name
-    :return: Employee Details
+    Get employee details by name.
+    :param name: Name of the employee
+    :return: Employee ID and manager ID
     """
-    matches = employee_manager.get_employee_details(name)
-    if len(matches) == 0:
-        raise ValueError(f"No employee with name {name} found")
-    emp_id = matches[0]
+    matches = employee_manager.search_employee_by_name(name)
 
-    employee_manager.get_employee_details(emp_id)
+    if len(matches) == 0:
+        raise ValueError(f"No employees found with name {name}.")
+
+    emp_id = matches[0]
+    emp_details = employee_manager.get_employee_details(emp_id)
+    return emp_details
+
 
 
 
