@@ -91,6 +91,28 @@ def send_email(subject: str, body: str, to_emails: list[str]) -> str:
         from_email= email_sender.username,)
     return f"Email successfully sent!"
 
+@mcp.tool()
+def update_ticket_status(ticket_id: str, status: str) -> str:
+    """
+    Update the status of a ticket.
+    :param ticket_id: Ticket ID
+    :param status: New status of the ticket
+    :return: Confirmation message
+    """
+    ticket_status_update = TicketStatusUpdate(status=status)
+    return ticket_manager.update_ticket_status(ticket_status_update, ticket_id)
+
+@mcp.tool()
+def list_tickets(employee_id: str, status: str) -> list[dict[str, str]]:
+    """
+    List tickets for an employee with optional status filter.
+    :param employee_id: Employee ID
+    :param status: Ticket status (optional)
+    :return: List of tickets
+    """
+    return ticket_manager.list_tickets(employee_id=employee_id, status=status)
+
+
 
 @mcp.prompt("onboard_new_employee")
 def onboard_new_employee(employee_name: str, manager_name: str):
