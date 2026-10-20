@@ -227,10 +227,7 @@ Python · FastMCP · MCP (Model Context Protocol) · SMTP · python-dotenv · uv
 
 ---
 
-## 🙌 Acknowledgements
+## 👤 Author
 
-Based on the HR-ASSIST agentic AI project from the Codebasics / LearnerX India course.
-
-**Author:** [Trijesh](https://github.com/trijesh61)
-
----
+**Trijesh**
+GitHub: [@trijesh61](https://github.com/trijesh61)
