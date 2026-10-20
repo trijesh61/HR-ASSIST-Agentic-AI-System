@@ -234,5 +234,3 @@ Based on the HR-ASSIST agentic AI project from the Codebasics / LearnerX India c
 **Author:** [Trijesh](https://github.com/trijesh61)
 
 ---
-
-<sub>All rights reserved @Codebasics Inc and LearnerX India Private Ltd.</sub>
